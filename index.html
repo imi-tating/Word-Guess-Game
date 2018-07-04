@@ -11,17 +11,18 @@
 </head>
 <body>
   <header>
-    <h1>Word Guess Game</h1>
-    <h6>Press any key to get started!</h6>
+    <h1 id="gameName">Word Guess Game</h1>
+    <h6 id="gameSubtext">Press any key to get started!</h6>
   </header>
   <div class="game">
     <p id="wordToBeGuessed"></p>
   </div>
+  <br>
+  <hr>
   <div class="container" id="stats">
     <h3>Number of Guesses Remaining: <span id="guessesRemaining">10</span></h3>
     <h3>Letters Already Guessed: <span id="lettersGuessed"></span></h3>
     <br>
-    <hr>
     <h3 id="winsTally">Wins: <span id="winsCount">0</span></h3>
   </div>
 </body>
