@@ -27,11 +27,6 @@ document.onkeyup = function(event) {
   var letterGuess = event.key;
   var guessThisWord = $("#wordToBeGuessed");
 
-
-
-
-
-
   function updateWordBlank () {
     var currentWordGuess = $(guessThisWord).text()
     var letterGuessLocation = wordToBeGuessed.indexOf(letterGuess);
@@ -41,12 +36,16 @@ document.onkeyup = function(event) {
       currentWordGuess[letterGuessLocation] = letterGuess;
     }
     guessThisWord.text(currentWordGuess.join(" "));
+  }
 
+
+  if ((/^[A-z]+$/).test(letterGuess)) {
+    updateWordBlank();
   }
 
 
 
-    updateWordBlank();
+
 
   //console.log(starterWordBlank);
 
