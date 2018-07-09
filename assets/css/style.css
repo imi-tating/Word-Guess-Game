@@ -1,0 +1,20 @@
+#top-header {
+  background-color: lightyellow;
+  color: mediumgray;
+  text-align: center;
+}
+
+#banner-ellie-cat {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#banner-text {
+  margin-top: 180px;
+}
+
+.game {
+  text-align: center;
+}
