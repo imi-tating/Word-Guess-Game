@@ -1,6 +1,7 @@
-var wordsToBeGuessed = ["cat", "meow", "mew", "kitten", "furball", "purrball", "hairball", "purrito"];
+var wordsToBeGuessed = ["cat", "meow", "mew", "kitten", "furball", "purrball", "hairball", "purrito", "whiskers", "paws"];
 var guessThisWord;
 var wordToBeGuessed;
+var gameEnd = false;
 
 var remainingGuesses = 11;
 var wins = 0;
@@ -31,28 +32,58 @@ function updateWordBlank(letterGuess) {
   guessThisWord.text(currentWordGuess.join(" "));
 }
 
+function callModal() {
+  // Get the modal
+  var modal = document.getElementById('myModal');
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  modal.style.display = "block";
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+      modal.style.display = "none";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  }
+}
+
 function checkIfGameHasEnded() {
   if (!guessThisWord.text().includes("_")) {
-    alert("You Win!");
+    callModal();
+
+    $("#modal-message").text("You Win!");
+    $("#modal-image").attr({
+      "src": "assets/images/leapingFish.png",
+      "alt": "multiple cat toy fish leaping into the air"
+    });
+
     wins++;
     $("#winsCount").text(wins);
-    gameReset();
+    gameEnd = true;
+    $("#resetGame").show();
   } else if (remainingGuesses == 0) {
-    alert("Oh no, you have run out of guesses! Would you like to play again?");
-    gameReset();
+    callModal();
+    $("#modal-message").text("Oh no, you have run out of guesses! Would you like to play again?");
+    $("#modal-image").attr({
+      "src": "assets/images/hudsonDrool.png",
+      "alt": "large dog drooling"
+    });
+    gameEnd = true;
+    $("#resetGame").show();
   }
 }
 
 function gameReset() {
-  $("#resetGame").show();
-  $("#resetGame").on("click", function() {
-    $("#resetGame").hide();
-    remainingGuesses = 11;
-    $("#guessesRemaining").text(10);
-    chooseWord();
-    $("#wordToBeGuessed").text(createWordBlank());
-    $("#lettersGuessed").text("");
-  })
+  $("#resetGame").hide();
+  remainingGuesses = 11;
+  $("#guessesRemaining").text(10);
+  chooseWord();
+  $("#wordToBeGuessed").text(createWordBlank());
+  $("#lettersGuessed").text("");
+  gameEnd = false;
 }
 
 $(document).ready(function(){
@@ -60,32 +91,18 @@ $(document).ready(function(){
   guessThisWord = $("#wordToBeGuessed");
   guessThisWord.text(createWordBlank());
   $("#resetGame").hide();
+  $("#resetGame").on("click", gameReset)
 });
-
 
 document.onkeyup = function(event) {
   var letterGuess = event.key;
 
-    if ((/^[a-z]+$/).test(letterGuess) && remainingGuesses > 0) {
+    if ((/^[a-z]+$/).test(letterGuess) && remainingGuesses > 0 && gameEnd == false) {
       updateWordBlank(letterGuess);
       remainingGuesses--;
       checkIfGameHasEnded();
 
       $("#guessesRemaining").text(remainingGuesses);
-      $("#lettersGuessed").append(letterGuess + "  ");
+      $("#lettersGuessed").append(letterGuess.toUpperCase() + "  ");
     }
-
-
-
-
-
-
-
-
-
-
-
-  //console.log(starterWordBlank);
-
-  //document.querySelector(#wordToBeGuessed).textContent = ;
 }
