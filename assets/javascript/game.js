@@ -1,9 +1,9 @@
-var wordsToBeGuessed = ["cat", "meow", "mew", "kitten", "furball", "purrball", "hairball", "purrito", "whiskers", "paws"];
+var wordsToBeGuessed = ["cat", "meow", "mew", "kitten", "furball", "purrball", "hairball", "purrito", "whiskers", "paws", "scratch", "chase", "sleep", "nap"];
 var guessThisWord;
 var wordToBeGuessed;
 var gameEnd = false;
 
-var remainingGuesses = 11;
+var remainingGuesses = 10;
 var wins = 0;
 
 function chooseWord() {
@@ -22,14 +22,16 @@ function createWordBlank() {
 }
 
 function updateWordBlank(letterGuess) {
+  var letterFound = false;
   var currentWordGuess = guessThisWord.text().split(" ");
-
   for(var i = 0; i < currentWordGuess.length; i++) {
     if (wordToBeGuessed[i] == letterGuess) {
       currentWordGuess[i] = letterGuess;
+      letterFound = true;
     }
   }
   guessThisWord.text(currentWordGuess.join(" "));
+  return letterFound;
 }
 
 function callModal() {
@@ -53,24 +55,14 @@ function callModal() {
 function checkIfGameHasEnded() {
   if (!guessThisWord.text().includes("_")) {
     callModal();
-
-    $("#modal-message").text("You Win!");
-    $("#modal-image").attr({
-      "src": "assets/images/leapingFish.png",
-      "alt": "multiple cat toy fish leaping into the air"
-    });
-
+    $("#modal-announcement").html('<p class="lead modal-message">You Win!</p><img class="modal-image" src="assets/images/leapingFish.png" alt="multiple cat toy fish leaping into the air">');
     wins++;
     $("#winsCount").text(wins);
     gameEnd = true;
     $("#resetGame").show();
   } else if (remainingGuesses == 0) {
     callModal();
-    $("#modal-message").text("Oh no, you have run out of guesses! Would you like to play again?");
-    $("#modal-image").attr({
-      "src": "assets/images/hudsonDrool.png",
-      "alt": "large dog drooling"
-    });
+    $("#modal-announcement").html('<img class="modal-image" src="assets/images/hudsonDrool.png" alt="large dog drooling"><p class="lead modal-message">Oh no, you have run out of guesses!<br>Would you like to play again?</p>')
     gameEnd = true;
     $("#resetGame").show();
   }
@@ -78,7 +70,7 @@ function checkIfGameHasEnded() {
 
 function gameReset() {
   $("#resetGame").hide();
-  remainingGuesses = 11;
+  remainingGuesses = 10;
   $("#guessesRemaining").text(10);
   chooseWord();
   $("#wordToBeGuessed").text(createWordBlank());
@@ -97,12 +89,20 @@ $(document).ready(function(){
 document.onkeyup = function(event) {
   var letterGuess = event.key;
 
-    if ((/^[a-z]+$/).test(letterGuess) && remainingGuesses > 0 && gameEnd == false) {
-      updateWordBlank(letterGuess);
-      remainingGuesses--;
-      checkIfGameHasEnded();
+  var allGuessedLetters = $("#lettersGuessed").text().toLowerCase();
+  //allGuessedLetters.indexOf(letterGuess == -1);
 
+
+    if ((/^[a-z]+$/).test(letterGuess) && remainingGuesses > 0 && gameEnd == false) {
+      var letterFound = updateWordBlank(letterGuess);
+      if(!letterFound) {
+        remainingGuesses--;
+      }
+      checkIfGameHasEnded();
       $("#guessesRemaining").text(remainingGuesses);
       $("#lettersGuessed").append(letterGuess.toUpperCase() + "  ");
     }
+
+
+
 }
