@@ -1,4 +1,7 @@
 var wordsToBeGuessed = ["cat", "meow", "mew", "kitten", "furball", "purrball", "hairball", "purrito", "whiskers", "paws", "scratch", "chase", "sleep", "nap"];
+
+var alphabetLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
 var guessThisWord;
 var wordToBeGuessed;
 var gameEnd = false;
@@ -6,8 +9,19 @@ var gameEnd = false;
 var remainingGuesses = 10;
 var wins = 0;
 
+function generateLetters() {
+  for (var i = 0; i < alphabetLetters.length; i++) {
+    var letterButton = $("<button>");
+    letterButton.addClass("btn btn-secondary border border-dark letterButton");
+    letterButton.attr({"data-letter": alphabetLetters[i], "type":"button"});
+    letterButton.text(alphabetLetters[i]);
+    $("#letter-options").append(letterButton);
+  }
+}
+
 function chooseWord() {
   wordToBeGuessed = wordsToBeGuessed[Math.floor(Math.random() * wordsToBeGuessed.length)];
+  $(".letterButton").prop("disabled", false);
   console.log(wordToBeGuessed);
 }
 
@@ -55,14 +69,14 @@ function callModal() {
 function checkIfGameHasEnded() {
   if (!guessThisWord.text().includes("_")) {
     callModal();
-    $("#modal-announcement").html('<p class="lead modal-message">You Win!</p><img class="modal-image" src="assets/images/leapingFish.png" alt="multiple cat toy fish leaping into the air">');
+    $("#modal-announcement").html('<p class="lead modal-message">You Win!</p><img class="modal-image" src="leapingFish.png" alt="multiple cat toy fish leaping into the air">');
     wins++;
     $("#winsCount").text(wins);
     gameEnd = true;
     $("#resetGame").show();
   } else if (remainingGuesses == 0) {
     callModal();
-    $("#modal-announcement").html('<img class="modal-image" src="assets/images/hudsonDrool.png" alt="large dog drooling"><p class="lead modal-message">Oh no, you have run out of guesses!<br>Would you like to play again?</p>')
+    $("#modal-announcement").html('<img class="modal-image" src="hudsonDrool.png" alt="large dog drooling"><p class="lead modal-message">Oh no, you have run out of guesses!<br>Would you like to play again?</p>')
     gameEnd = true;
     $("#resetGame").show();
   }
@@ -74,7 +88,6 @@ function gameReset() {
   $("#guessesRemaining").text(10);
   chooseWord();
   $("#wordToBeGuessed").text(createWordBlank());
-  $("#lettersGuessed").text("");
   gameEnd = false;
 }
 
@@ -84,14 +97,11 @@ $(document).ready(function(){
   guessThisWord.text(createWordBlank());
   $("#resetGame").hide();
   $("#resetGame").on("click", gameReset)
-});
+  generateLetters();
 
-document.onkeyup = function(event) {
-  var letterGuess = event.key;
-
-  var allGuessedLetters = $("#lettersGuessed").text().toLowerCase();
-  //allGuessedLetters.indexOf(letterGuess == -1);
-
+  $(".letterButton").on("click", function() {
+    $(this).prop("disabled", true);
+    var letterGuess = $(this).attr("data-letter");
 
     if ((/^[a-z]+$/).test(letterGuess) && remainingGuesses > 0 && gameEnd == false) {
       var letterFound = updateWordBlank(letterGuess);
@@ -100,9 +110,7 @@ document.onkeyup = function(event) {
       }
       checkIfGameHasEnded();
       $("#guessesRemaining").text(remainingGuesses);
-      $("#lettersGuessed").append(letterGuess.toUpperCase() + "  ");
     }
+  });
 
-
-
-}
+});
