@@ -124,6 +124,6 @@
       margin: 10% auto; /* 15% from the top and centered */
       padding: 1rem;
       border: 1px solid #888;
-      width: 18rem; /* Could be more or less, depending on screen size */
+      width: 20rem; /* Could be more or less, depending on screen size */
   }
 }

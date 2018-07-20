@@ -69,14 +69,14 @@ function callModal() {
 function checkIfGameHasEnded() {
   if (!guessThisWord.text().includes("_")) {
     callModal();
-    $("#modal-announcement").html('<p class="lead modal-message">You Win!</p><img class="modal-image" src="leapingFish.png" alt="multiple cat toy fish leaping into the air">');
+    $("#modal-announcement").html('<p class="lead modal-message">You Win!</p><img class="modal-image" src="assets/images/leapingFish.png" alt="multiple cat toy fish leaping into the air">');
     wins++;
     $("#winsCount").text(wins);
     gameEnd = true;
     $("#resetGame").show();
   } else if (remainingGuesses == 0) {
     callModal();
-    $("#modal-announcement").html('<img class="modal-image" src="hudsonDrool.png" alt="large dog drooling"><p class="lead modal-message">Oh no, you have run out of guesses!<br>Would you like to play again?</p>')
+    $("#modal-announcement").html('<img class="modal-image" src="assets/images/hudsonDrool.png" alt="large dog drooling"><p class="lead modal-message">Oh no, you have run out of guesses!<br>Would you like to play again?</p>')
     gameEnd = true;
     $("#resetGame").show();
   }
