@@ -1,3 +1,8 @@
+.fa-fish {
+  font-size: 1.8rem;
+  /* color: LightGray; */
+}
+
 #jumbotron {
   background-color: LightYellow;
   padding: 1rem;
@@ -126,4 +131,10 @@
       border: 1px solid #888;
       width: 20rem; /* Could be more or less, depending on screen size */
   }
+}
+
+
+/* next screen break, still need to fill in... is the word "only really necessary here?" */
+@media screen and (min-width: 80rem) {
+
 }
