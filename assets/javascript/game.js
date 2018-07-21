@@ -92,6 +92,9 @@ function gameReset() {
 }
 
 $(document).ready(function(){
+  $("#dropdownMenu").click(function() {
+    $('.dropdown-toggle').dropdown();
+  });
   chooseWord();
   guessThisWord = $("#wordToBeGuessed");
   guessThisWord.text(createWordBlank());
