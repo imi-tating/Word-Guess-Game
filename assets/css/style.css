@@ -1,6 +1,6 @@
 .fa-fish {
-  font-size: 1.8rem;
-  /* color: LightGray; */
+  font-size: 1.5rem;
+  margin-right: -.5rem;
 }
 
 #jumbotron {
@@ -82,8 +82,12 @@
 
 
 @media only screen and (min-width: 47rem) {
+  .fa-fish {
+    font-size: 1.8rem;
+    margin-right: 0;
+  }
+
   #jumbotron {
-    background-color: LightYellow;
     padding: 3rem;
     margin-bottom: 2rem;
   }
@@ -136,5 +140,9 @@
 
 /* next screen break, still need to fill in... is the word "only really necessary here?" */
 @media screen and (min-width: 80rem) {
+  .fa-fish {
+    font-size: 2.3rem;
+    margin-right: .5rem;
+  }
 
 }
